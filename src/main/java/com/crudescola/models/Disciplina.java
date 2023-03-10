@@ -1,28 +1,71 @@
 package com.crudescola.models;
 
-public enum Disciplina{
-	MATEMÁTICA(1),
-	PORTUGUÊS(2),
-	CIÊNCIAS(3),
-	HIST_GEO(4);
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+
+@Entity
+public class Disciplina {
 	
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@NotBlank
+	private String nome;
 	
-	private Disciplina(int id) {
+	// cria o relacionamento do aluno com a aula
+	@OneToMany(mappedBy = "disciplina")
+	private List<Aula> aulas = new ArrayList<>();
+		
+	public Disciplina(Long id, @NotBlank String nome) {
+		this.id = id;
+		this.nome = nome;
+		
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(aulas, id, nome);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Disciplina other = (Disciplina) obj;
+		return Objects.equals(aulas, other.aulas) && id == other.id && Objects.equals(nome, other.nome);
+	}
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public int getId() {
-	return id;
+	public String getNome() {
+		return nome;
 	}
-	
-	public static Disciplina valueOf(int id) {
-		for(Disciplina value : Disciplina.values()) {
-			if(value.getId() == id) {
-				return value;
-			}
-		}
-		throw new IllegalArgumentException("Código inválido para disciplina.");
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-	
+
+	public void setAulas(List<Aula> aulas) {
+		this.aulas = aulas;
+	}
+
+	// get para o relacionamento do aluno com a aula
+	public List<Aula> getAulas() {
+		return aulas;
+	}
 }

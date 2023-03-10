@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class Aula {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private Instant data;
 	
 	@ManyToOne
@@ -25,25 +25,37 @@ public class Aula {
 	@JoinColumn(name="professor_id")
 	private Professor professor;
 	
-	private Integer disciplina;
+	@ManyToOne
+	@JoinColumn(name="disciplina_id")
+	private Disciplina disciplina;
+	
 	
 	public Aula() {
 	}
 
-	public Aula(int id, Instant data, Aluno aluno, Professor professor, Disciplina disciplina) {
-		super();
-		this.id = id;
-		this.data = data;
-		this.aluno = aluno;
-		this.professor = professor;
-		setDisciplina(disciplina);
-	}
+//	public Aula(int id, Instant data, Aluno aluno, Professor professor, Disciplina disciplina) {
+//		super();
+//		this.id = id;
+//		this.data = data;
+//		this.aluno = aluno;
+//		this.professor = professor;
+//		setDisciplina(disciplina);
+//	}
+	
+	public Aula(Long id, Aluno aluno, Professor professor, Disciplina disciplina) {
+	super();
+	this.id = id;
+	this.aluno = aluno;
+	this.professor = professor;
+	this.disciplina = disciplina;
+}
 
-	public int getId() {
+
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(int id) {
+	
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -72,11 +84,11 @@ public class Aula {
 	}
 
 	public Disciplina getDisciplina() {
-		return Disciplina.valueOf(disciplina);
+		return disciplina;
 	}
 
 	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina.getId();
+		this.disciplina = disciplina;
 	}
 
 	@Override

@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crudescola.models.Aluno;
 import com.crudescola.models.Professor;
 import com.crudescola.repositories.ProfessorRepository;
 
 @RestController
-@RequestMapping( "/professores")
+@RequestMapping("/professores")
 public class ProfessorController {
 
 	@Autowired
@@ -25,9 +26,14 @@ public class ProfessorController {
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT })
 	// @PostMapping
-	public @ResponseBody Professor cadastrarProfessor(@Valid Professor Professor) {
-		professorRepository.save(Professor);
-		return Professor;
+	public @ResponseBody Professor cadastrarProfessor(@Valid Professor professor) {
+		professorRepository.save(professor);
+		return professor;
+	}
+
+	@GetMapping
+	public Iterable<Professor> retornarProfessores() {
+		return professorRepository.findAll();
 	}
 
 	@GetMapping(path = "/{id}")

@@ -16,12 +16,10 @@ public class Professor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	@NotBlank
 	private String nome;
 	private String telefone;
-	
-	private Disciplina disciplina;
 	
 	// cria o relacionamento do aluno com a aula
 		@OneToMany(mappedBy = "professor")
@@ -29,19 +27,26 @@ public class Professor {
 
 	public Professor() {
 	}
-
-	public Professor(int id, String nome, Disciplina disciplina, String telefone) {
+	
+	public Professor(Long id, String nome, String telefone) {
 		this.id = id;
 		this.nome = nome;
-		this.disciplina = disciplina;
+		this.telefone = telefone;
+	}
+	
+	
+
+	public Professor(@NotBlank String nome, String telefone) {
+		super();
+		this.nome = nome;
 		this.telefone = telefone;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -66,17 +71,10 @@ public class Professor {
 		return aulas;
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(disciplina, id, nome, telefone);
+		return Objects.hash(id, nome, telefone);
 	}
 
 	@Override
@@ -88,7 +86,7 @@ public class Professor {
 		if (getClass() != obj.getClass())
 			return false;
 		Professor other = (Professor) obj;
-		return disciplina == other.disciplina && id == other.id && Objects.equals(nome, other.nome)
+		return id == other.id && Objects.equals(nome, other.nome)
 				&& Objects.equals(telefone, other.telefone);
 	}
 }

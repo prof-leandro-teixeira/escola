@@ -1,5 +1,6 @@
 package com.crudescola.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,11 +13,12 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class Aluno {
+public class Aluno implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	@NotBlank
 	private String nome;
 	private String ano;
@@ -30,7 +32,13 @@ public class Aluno {
 
 	public Aluno() {
 	}
-
+	
+	public Aluno(Long id, String nome, String ano) {
+		this.id = id;
+		this.nome = nome;
+		this.ano = ano;
+	}
+	
 	public Aluno(String nome, String ano, String responsavel, String telefone, String cpf) {
 		this.nome = nome;
 		this.ano = ano;
@@ -39,11 +47,11 @@ public class Aluno {
 		this.cpf = cpf;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

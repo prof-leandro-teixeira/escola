@@ -13,36 +13,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crudescola.models.Aula;
-import com.crudescola.repositories.AulaRepository;
+import com.crudescola.models.Disciplina;
+import com.crudescola.repositories.DisciplinaRepository;
 
 @RestController
-@RequestMapping("/aulas")
-public class AulaController {
+@RequestMapping("/disciplinas")
+public class DisciplinaController {
 
 	@Autowired
-	private AulaRepository aulaRepository;
+	private DisciplinaRepository disciplinaRepository;
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT })
 	// @PostMapping
-	public @ResponseBody Aula cadastrarAulas(@Valid Aula aula) {
-		aulaRepository.save(aula);
-		return aula;
+	public @ResponseBody Disciplina cadastrarDisciplina(@Valid Disciplina disciplina) {
+		disciplinaRepository.save(disciplina);
+		return disciplina;
 	}
 
+	// evitar uso de findAll para entidades do negócio
 	@GetMapping
-	public Iterable<Aula> retornarAulas() {
-		return aulaRepository.findAll();
+	public Iterable<Disciplina> retornarDisciplinas() {
+		return disciplinaRepository.findAll();
 	}
 
 	@GetMapping(path = "/{id}")
-	public Optional<Aula> retornarAulasPorId(@PathVariable int id) {
-		return aulaRepository.findById(id);
+	public Optional<Disciplina> retornarDisciplinasPorId(@PathVariable int id) {
+		return disciplinaRepository.findById(id);
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public void excuirAulassorId(@PathVariable int id) {
-		aulaRepository.deleteById(id);
+	public void excuirDisciplinasPorId(@PathVariable int id) {
+		disciplinaRepository.deleteById(id);
 	}
 
+	
 }
