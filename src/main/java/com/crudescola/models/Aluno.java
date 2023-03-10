@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,28 +25,20 @@ public class Aluno implements Serializable {
 	private String nome;
 	private String ano;
 	private String responsavel;
-	private String telefone;
-	private String cpf;
 
 	// cria o relacionamento do aluno com a aula
+	@JsonIgnore
 	@OneToMany(mappedBy = "aluno")
 	private List<Aula> aulas = new ArrayList<>();
 
 	public Aluno() {
 	}
-	
-	public Aluno(Long id, String nome, String ano) {
+
+	public Aluno(Long id, String nome, String ano, String responsavel) {
 		this.id = id;
 		this.nome = nome;
 		this.ano = ano;
-	}
-	
-	public Aluno(String nome, String ano, String responsavel, String telefone, String cpf) {
-		this.nome = nome;
-		this.ano = ano;
 		this.responsavel = responsavel;
-		this.telefone = telefone;
-		this.cpf = cpf;
 	}
 
 	public Long getId() {
@@ -79,22 +73,6 @@ public class Aluno implements Serializable {
 		this.responsavel = responsavel;
 	}
 
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	// get para o relacionamento do aluno com a aula
 	public List<Aula> getAulas() {
 		return aulas;
@@ -102,7 +80,7 @@ public class Aluno implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, cpf, id, nome, responsavel, telefone);
+		return Objects.hash(ano, id, nome, responsavel);
 	}
 
 	@Override
@@ -114,8 +92,7 @@ public class Aluno implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		return Objects.equals(ano, other.ano) && Objects.equals(cpf, other.cpf) && id == other.id
-				&& Objects.equals(nome, other.nome) && Objects.equals(responsavel, other.responsavel)
-				&& Objects.equals(telefone, other.telefone);
+		return Objects.equals(ano, other.ano) && id == other.id && Objects.equals(nome, other.nome)
+				&& Objects.equals(responsavel, other.responsavel);
 	}
 }

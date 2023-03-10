@@ -1,5 +1,6 @@
 package com.crudescola.models;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -11,46 +12,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Aula {
+public class Aula implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant data;
-	
 	@ManyToOne
 	@JoinColumn(name="aluno_id")
 	private Aluno aluno;
-	
 	@ManyToOne
 	@JoinColumn(name="professor_id")
 	private Professor professor;
-	
 	@ManyToOne
 	@JoinColumn(name="disciplina_id")
 	private Disciplina disciplina;
-	
-	
+		
 	public Aula() {
 	}
 
-//	public Aula(int id, Instant data, Aluno aluno, Professor professor, Disciplina disciplina) {
-//		super();
-//		this.id = id;
-//		this.data = data;
-//		this.aluno = aluno;
-//		this.professor = professor;
-//		setDisciplina(disciplina);
-//	}
+	public Aula(Long id, Instant data, Aluno aluno, Professor professor, Disciplina disciplina) {
+		super();
+		this.id = id;
+		this.data = data;
+		this.aluno = aluno;
+		this.professor = professor;
+		this.disciplina = disciplina;
+	}
 	
-	public Aula(Long id, Aluno aluno, Professor professor, Disciplina disciplina) {
-	super();
-	this.id = id;
-	this.aluno = aluno;
-	this.professor = professor;
-	this.disciplina = disciplina;
-}
-
-
 	public Long getId() {
 		return id;
 	}

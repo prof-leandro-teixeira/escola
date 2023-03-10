@@ -1,5 +1,6 @@
 package com.crudescola.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Professor {
+public class Professor implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,22 +26,15 @@ public class Professor {
 	private String telefone;
 	
 	// cria o relacionamento do aluno com a aula
-		@OneToMany(mappedBy = "professor")
-		private List<Aula> aulas = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "professor")
+	private List<Aula> aulas = new ArrayList<>();
 
 	public Professor() {
 	}
 	
-	public Professor(Long id, String nome, String telefone) {
+	public Professor(@NotBlank Long id, String nome, String telefone) {
 		this.id = id;
-		this.nome = nome;
-		this.telefone = telefone;
-	}
-	
-	
-
-	public Professor(@NotBlank String nome, String telefone) {
-		super();
 		this.nome = nome;
 		this.telefone = telefone;
 	}
