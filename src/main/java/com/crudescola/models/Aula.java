@@ -1,7 +1,7 @@
 package com.crudescola.models;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ public class Aula implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Instant data;
+	private Date timestamp;
 	@ManyToOne
 	@JoinColumn(name="aluno_id")
 	private Aluno aluno;
@@ -32,10 +32,10 @@ public class Aula implements Serializable {
 	public Aula() {
 	}
 
-	public Aula(Long id, Instant data, Aluno aluno, Professor professor, Disciplina disciplina) {
+	public Aula(Long id, Date timestamp, Aluno aluno, Professor professor, Disciplina disciplina) {
 		super();
 		this.id = id;
-		this.data = data;
+		this.timestamp = timestamp;
 		this.aluno = aluno;
 		this.professor = professor;
 		this.disciplina = disciplina;
@@ -49,12 +49,12 @@ public class Aula implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getData() {
-		return data;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	public void setData(Instant data) {
-		this.data = data;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public Aluno getAluno() {
@@ -83,7 +83,7 @@ public class Aula implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(aluno, data, disciplina, id, professor);
+		return Objects.hash(aluno, timestamp, disciplina, id, professor);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class Aula implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Aula other = (Aula) obj;
-		return Objects.equals(aluno, other.aluno) && Objects.equals(data, other.data) && disciplina == other.disciplina
+		return Objects.equals(aluno, other.aluno) && Objects.equals(timestamp, other.timestamp) && disciplina == other.disciplina
 				&& id == other.id && Objects.equals(professor, other.professor);
 	}
 
